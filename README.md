@@ -1,21 +1,31 @@
 # Vikas Karyana Store Website
 
-A simple static website for the grocery store with information sections and a product showcase. The current implementation is ready for future dynamic enhancements such as online ordering.
+A modern static website for the grocery store with delivery-focused design, product categories, featured items with cart functionality, and an order form.
 
 ## Files
 
-- `index.html` — main page structure
-- `styles.css` — responsive styling
-- `script.js` — product filter and contact form behavior
+- `index.html` — main page with hero, categories, products, order form, footer
+- `styles.css` — responsive styling with green/amber theme
+- `script.js` — cart management and form submission
+
+## Features
+
+- Hero section with store stats and delivery info
+- Product categories (Groceries, Snacks, Spices)
+- Featured products with "Add to Cart" buttons
+- Cart bar that appears when items are added
+- Order form with delivery options
+- Responsive design for mobile and desktop
 
 ## Preview
 
 1. Open `index.html` in your browser.
-2. Use the product filter buttons to see category-based product cards.
-3. On mobile, tap the menu icon to open navigation.
+2. Click "Add" on products to see the cart bar.
+3. Fill the order form to simulate submission.
 
-## Next steps
+## Future enhancements
 
-- Add actual product images and local store photos
-- Add backend/order support when online ordering is ready
-- Deploy the site with GitHub Pages or Netlify
+- Backend integration for real orders
+- User accounts and order history
+- Payment gateway
+- Inventory management

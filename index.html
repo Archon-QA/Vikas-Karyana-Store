@@ -4,128 +4,142 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vikas Karyana Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="#home" class="brand">Vikas Karyana Store</a>
-      <nav class="main-nav">
-        <a href="#home">Home</a>
-        <a href="#products">Products</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <button class="nav-toggle" aria-label="Open navigation">☰</button>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Vikas <span>Karyana</span></div>
+  <div class="nav-links">
+    <a href="#categories">Products</a>
+    <a href="#order">Order</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <button class="nav-cta" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Order Now</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-badge">Your Neighbourhood Store</div>
+    <h1>Fresh Groceries,<br/><em>Delivered</em> to Your Door</h1>
+    <p>From daily staples to your favourite snacks — Vikas Karyana Store has everything your household needs, right here in the neighbourhood.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Place an Order</button>
+      <button class="btn-secondary" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">Browse Products</button>
     </div>
-  </header>
-
-  <main>
-    <section class="hero" id="home">
-      <div class="container hero-content">
-        <div>
-          <p class="eyebrow">Local Grocery Store</p>
-          <h1>Fresh groceries for your home, every day.</h1>
-          <p class="hero-copy">Quality produce, pantry essentials, and friendly service from Vikas Karyana Store. Visit us for daily needs and local favorites.</p>
-          <div class="hero-actions">
-            <a href="#products" class="button primary">View Products</a>
-            <a href="#contact" class="button secondary">Contact Us</a>
-          </div>
-        </div>
-        <div class="hero-card">
-          <h2>Store Details</h2>
-          <ul class="store-details">
-            <li><strong>Address:</strong> Main Road, Near City Square, Your Town</li>
-            <li><strong>Hours:</strong> Mon–Sat 8am–9pm, Sun 9am–8pm</li>
-            <li><strong>Phone:</strong> +91 98765 43210</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="products">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Our Selection</p>
-          <h2>Popular Grocery Categories</h2>
-          <p>Explore daily essentials and local favorites. Online orders will be added later as an enhancement.</p>
-        </div>
-
-        <div class="filter-bar">
-          <button class="filter-btn active" data-category="all">All</button>
-          <button class="filter-btn" data-category="produce">Produce</button>
-          <button class="filter-btn" data-category="dairy">Dairy</button>
-          <button class="filter-btn" data-category="spices">Spices</button>
-          <button class="filter-btn" data-category="staples">Staples</button>
-        </div>
-
-        <div class="product-grid" id="productGrid"></div>
-      </div>
-    </section>
-
-    <section class="section about-section" id="about">
-      <div class="container two-column">
-        <div>
-          <p class="eyebrow">About Us</p>
-          <h2>Family-owned. Community-focused.</h2>
-          <p>Vikas Karyana Store has served the community for years with fresh produce, grocery staples and a friendly smile. We believe in honest pricing and reliable quality.</p>
-          <ul class="about-list">
-            <li>Fresh daily fruits and vegetables</li>
-            <li>Wide range of spices and pantry staples</li>
-            <li>Local support with helpful shopping advice</li>
-          </ul>
-        </div>
-        <div class="about-image">
-          <div class="image-placeholder">Storefront Image</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="contact">
-      <div class="container two-column contact-section">
-        <div>
-          <p class="eyebrow">Get in Touch</p>
-          <h2>Questions? Visit or call us.</h2>
-          <p>Stop by the store or send us a quick message. We are happy to help with product availability, special requests, and shopping recommendations.</p>
-          <div class="contact-cards">
-            <div class="contact-card">
-              <h3>Visit In Person</h3>
-              <p>Main Road, Near City Square</p>
-            </div>
-            <div class="contact-card">
-              <h3>Call Us</h3>
-              <p>+91 98765 43210</p>
-            </div>
-          </div>
-        </div>
-
-        <form class="contact-form" id="contactForm">
-          <label>
-            Name
-            <input type="text" name="name" required placeholder="Your name" />
-          </label>
-          <label>
-            Email
-            <input type="email" name="email" required placeholder="your@email.com" />
-          </label>
-          <label>
-            Message
-            <textarea name="message" required placeholder="Your question or feedback"></textarea>
-          </label>
-          <button type="submit" class="button primary">Send Message</button>
-          <p class="form-note">Online ordering is coming soon. For now, please call or visit the store.</p>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>© 2026 Vikas Karyana Store. Local groceries for your family.</p>
-      <p>Future enhancement: order support and cart system.</p>
+  </div>
+  <div class="hero-visual">
+    <div class="store-tag">Open 7am – 10pm</div>
+    <div style="text-align:center;font-family:'DM Serif Display',serif;font-size:18px;color:var(--green-dark);margin-bottom:20px;">Why Shop With Us?</div>
+    <div class="hero-stats">
+      <div class="stat-card"><div class="stat-num">500+</div><div class="stat-label">Products in stock</div></div>
+      <div class="stat-card"><div class="stat-num">10+</div><div class="stat-label">Years serving you</div></div>
+      <div class="stat-card"><div class="stat-num">Fast</div><div class="stat-label">Same-day delivery</div></div>
+      <div class="stat-card"><div class="stat-num">₹0</div><div class="stat-label">Delivery fee on ₹300+</div></div>
     </div>
-  </footer>
+  </div>
+</div>
 
-  <script src="script.js"></script>
+<!-- CATEGORIES -->
+<section id="categories">
+  <div class="section-label">What we carry</div>
+  <div class="section-title">Shop by Category</div>
+  <div class="cats">
+    <div class="cat-card">
+      <div class="cat-icon g1">🌾</div>
+      <div class="cat-body"><div class="cat-name">Groceries & Staples</div><div class="cat-count">Dal, atta, rice, oil & more</div></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon g2">🍿</div>
+      <div class="cat-body"><div class="cat-name">Snacks & Beverages</div><div class="cat-count">Chips, biscuits, cold drinks & tea</div></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon g3">🌶️</div>
+      <div class="cat-body"><div class="cat-name">Spices & Masalas</div><div class="cat-count">Fresh & packed, all brands</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="products-bg">
+  <div class="section-label">Popular items</div>
+  <div class="section-title">Featured Products</div>
+  <div class="products">
+    <div class="prod-card"><div class="prod-img">🌾</div><div class="prod-body"><div class="prod-name">Aashirvaad Atta</div><div class="prod-weight">5 kg</div><div class="prod-footer"><div class="prod-price">₹245</div><button class="add-btn" onclick="addToCart('Aashirvaad Atta')">+ Add</button></div></div></div>
+    <div class="prod-card"><div class="prod-img">🛢️</div><div class="prod-body"><div class="prod-name">Fortune Sunflower Oil</div><div class="prod-weight">1 litre</div><div class="prod-footer"><div class="prod-price">₹138</div><button class="add-btn" onclick="addToCart('Fortune Oil')">+ Add</button></div></div></div>
+    <div class="prod-card"><div class="prod-img">🫘</div><div class="prod-body"><div class="prod-name">Toor Dal</div><div class="prod-weight">1 kg</div><div class="prod-footer"><div class="prod-price">₹115</div><button class="add-btn" onclick="addToCart('Toor Dal')">+ Add</button></div></div></div>
+    <div class="prod-card"><div class="prod-img">🍿</div><div class="prod-body"><div class="prod-name">Kurkure Masala Munch</div><div class="prod-weight">90 g</div><div class="prod-footer"><div class="prod-price">₹20</div><button class="add-btn" onclick="addToCart('Kurkure')">+ Add</button></div></div></div>
+    <div class="prod-card"><div class="prod-img">☕</div><div class="prod-body"><div class="prod-name">Tata Tea Gold</div><div class="prod-weight">500 g</div><div class="prod-footer"><div class="prod-price">₹248</div><button class="add-btn" onclick="addToCart('Tata Tea')">+ Add</button></div></div></div>
+    <div class="prod-card"><div class="prod-img">🌶️</div><div class="prod-body"><div class="prod-name">MDH Garam Masala</div><div class="prod-weight">100 g</div><div class="prod-footer"><div class="prod-price">₹65</div><button class="add-btn" onclick="addToCart('MDH Masala')">+ Add</button></div></div></div>
+  </div>
+  <!-- Cart Bar -->
+  <div id="cart-bar" style="display:none;margin-top:24px;background:var(--green-dark);color:#fff;padding:14px 20px;border-radius:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <span id="cart-text" style="font-size:14px;">Items selected</span>
+    <button class="btn-primary" style="background:#fff;color:var(--green-dark);" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Proceed to Order ↓</button>
+  </div>
+</section>
+
+<!-- ORDER FORM -->
+<section id="order" class="order-section">
+  <div class="order-grid">
+    <div class="order-info">
+      <div class="section-label">Quick & easy</div>
+      <h3>Place Your Order</h3>
+      <p>Call us, WhatsApp us, or fill in the form below — we'll confirm your order and deliver it to your doorstep.</p>
+      <div class="info-row"><div class="info-icon">📞</div><span>+91 98765 43210</span></div>
+      <div class="info-row"><div class="info-icon">💬</div><span>WhatsApp us your list</span></div>
+      <div class="info-row" id="contact"><div class="info-icon">📍</div><span>Sector 12, Panchkula, Haryana</span></div>
+      <div class="info-row"><div class="info-icon">🕐</div><span>Mon–Sun: 7:00 AM – 10:00 PM</span></div>
+    </div>
+    <div>
+      <form onsubmit="submitOrder(event)">
+        <h3>Order Form</h3>
+        <div class="form-row">
+          <div><label>Your Name</label><input type="text" placeholder="e.g. Rahul Sharma" required/></div>
+          <div><label>Phone Number</label><input type="tel" placeholder="+91 98765 43210" required/></div>
+        </div>
+        <label>Delivery Address</label>
+        <input type="text" placeholder="House no., street, sector…" required/>
+        <label>Items You Need</label>
+        <textarea placeholder="e.g. 2 kg atta, 1L oil, MDH masala, Kurkure…" id="items-field" required></textarea>
+        <label>Preferred Delivery Time</label>
+        <select>
+          <option>As soon as possible</option>
+          <option>Morning (7am – 12pm)</option>
+          <option>Afternoon (12pm – 5pm)</option>
+          <option>Evening (5pm – 10pm)</option>
+        </select>
+        <button class="submit-btn" type="submit">Submit Order →</button>
+        <div class="success-msg" id="success-msg">✅ Order received! We'll call you shortly to confirm.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="foot-logo">Vikas <span>Karyana</span> Store</div>
+    <div class="foot-tagline">Your trusted neighbourhood store for fresh groceries, spices, and daily essentials — serving Panchkula for over a decade.</div>
+  </div>
+  <div class="foot-col">
+    <h4>Products</h4>
+    <a href="#">Groceries & Staples</a>
+    <a href="#">Snacks & Beverages</a>
+    <a href="#">Spices & Masalas</a>
+  </div>
+  <div class="foot-col">
+    <h4>Contact</h4>
+    <a href="#">+91 98765 43210</a>
+    <a href="#">Sector 12, Panchkula</a>
+    <a href="#">7am – 10pm daily</a>
+  </div>
+</footer>
+<div class="foot-bottom">© 2026 Vikas Karyana Store. All rights reserved.</div>
+
+<script src="script.js"></script>
 </body>
 </html>
