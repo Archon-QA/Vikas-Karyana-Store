@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vikas Karyana Store</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#home" class="brand">Vikas Karyana Store</a>
+      <nav class="main-nav">
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Open navigation">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-content">
+        <div>
+          <p class="eyebrow">Local Grocery Store</p>
+          <h1>Fresh groceries for your home, every day.</h1>
+          <p class="hero-copy">Quality produce, pantry essentials, and friendly service from Vikas Karyana Store. Visit us for daily needs and local favorites.</p>
+          <div class="hero-actions">
+            <a href="#products" class="button primary">View Products</a>
+            <a href="#contact" class="button secondary">Contact Us</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h2>Store Details</h2>
+          <ul class="store-details">
+            <li><strong>Address:</strong> Main Road, Near City Square, Your Town</li>
+            <li><strong>Hours:</strong> Mon–Sat 8am–9pm, Sun 9am–8pm</li>
+            <li><strong>Phone:</strong> +91 98765 43210</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="products">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Our Selection</p>
+          <h2>Popular Grocery Categories</h2>
+          <p>Explore daily essentials and local favorites. Online orders will be added later as an enhancement.</p>
+        </div>
+
+        <div class="filter-bar">
+          <button class="filter-btn active" data-category="all">All</button>
+          <button class="filter-btn" data-category="produce">Produce</button>
+          <button class="filter-btn" data-category="dairy">Dairy</button>
+          <button class="filter-btn" data-category="spices">Spices</button>
+          <button class="filter-btn" data-category="staples">Staples</button>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+      </div>
+    </section>
+
+    <section class="section about-section" id="about">
+      <div class="container two-column">
+        <div>
+          <p class="eyebrow">About Us</p>
+          <h2>Family-owned. Community-focused.</h2>
+          <p>Vikas Karyana Store has served the community for years with fresh produce, grocery staples and a friendly smile. We believe in honest pricing and reliable quality.</p>
+          <ul class="about-list">
+            <li>Fresh daily fruits and vegetables</li>
+            <li>Wide range of spices and pantry staples</li>
+            <li>Local support with helpful shopping advice</li>
+          </ul>
+        </div>
+        <div class="about-image">
+          <div class="image-placeholder">Storefront Image</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container two-column contact-section">
+        <div>
+          <p class="eyebrow">Get in Touch</p>
+          <h2>Questions? Visit or call us.</h2>
+          <p>Stop by the store or send us a quick message. We are happy to help with product availability, special requests, and shopping recommendations.</p>
+          <div class="contact-cards">
+            <div class="contact-card">
+              <h3>Visit In Person</h3>
+              <p>Main Road, Near City Square</p>
+            </div>
+            <div class="contact-card">
+              <h3>Call Us</h3>
+              <p>+91 98765 43210</p>
+            </div>
+          </div>
+        </div>
+
+        <form class="contact-form" id="contactForm">
+          <label>
+            Name
+            <input type="text" name="name" required placeholder="Your name" />
+          </label>
+          <label>
+            Email
+            <input type="email" name="email" required placeholder="your@email.com" />
+          </label>
+          <label>
+            Message
+            <textarea name="message" required placeholder="Your question or feedback"></textarea>
+          </label>
+          <button type="submit" class="button primary">Send Message</button>
+          <p class="form-note">Online ordering is coming soon. For now, please call or visit the store.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 Vikas Karyana Store. Local groceries for your family.</p>
+      <p>Future enhancement: order support and cart system.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
