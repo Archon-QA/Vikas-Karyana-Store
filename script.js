@@ -183,6 +183,7 @@ function submitOrder(e) {
   const formData = {
     name: inputs[0].value,
     phone: inputs[1].value,
+    email: inputs[3]?.value || '', // Email if present in form
     address: inputs[2].value,
     items: textareas[0].value
   };
@@ -197,15 +198,113 @@ function submitOrder(e) {
   // Clear errors if valid
   document.getElementById('formErrorSummary').style.display = 'none';
   
-  // Show success
-  const successMsg = document.getElementById('success-msg');
-  successMsg.style.display = 'block';
-  successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  // Calculate order totals
+  const { subtotal, deliveryFee, total } = calculateTotals();
   
-  // Clear form
-  form.reset();
+  // Prepare order data for API
+  const orderData = {
+    customer_name: formData.name,
+    phone: formData.phone,
+    email: formData.email,
+    delivery_address: formData.address,
+    order_items: JSON.stringify(cart), // Send cart items as JSON
+    subtotal: subtotal,
+    delivery_fee: deliveryFee,
+    total: total,
+    payment_method: 'cod' // Cash on delivery for now
+  };
   
-  // Clear cart
-  cart = [];
-  document.getElementById('cart-bar').style.display = 'none';
+  // Show loading state
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const originalBtnText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Processing...';
+  
+  // Send order to backend API
+  fetch('http://localhost:3000/api/orders', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(orderData)
+  })
+  .then(response => {
+    if (!response.ok) {
+      return response.json().then(data => {
+        throw new Error(data.error || 'Failed to submit order');
+      });
+    }
+    return response.json();
+  })
+  .then(data => {
+    // Order submitted successfully
+    console.log('Order created:', data);
+    
+    // Store order details for confirmation page
+    const orderId = data.data?.id || data.data?.order_id;
+    const orderRef = data.data?.order_ref;
+    
+    // Store in sessionStorage to pass to confirmation page
+    sessionStorage.setItem('lastOrder', JSON.stringify({
+      id: orderId,
+      ref: orderRef,
+      customer_name: formData.name,
+      phone: formData.phone,
+      email: formData.email,
+      address: formData.address,
+      items: cart,
+      subtotal: subtotal,
+      deliveryFee: deliveryFee,
+      total: total,
+      timestamp: new Date().toLocaleString('en-IN')
+    }));
+    
+    // Clear form and cart
+    form.reset();
+    cart = [];
+    document.getElementById('cart-bar').style.display = 'none';
+    
+    // Show success message or redirect
+    const successMsg = document.getElementById('success-msg');
+    if (successMsg) {
+      successMsg.style.display = 'block';
+      successMsg.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+          <h3>✅ Order Placed Successfully!</h3>
+          <p>Your order ID: <strong>#${orderRef || orderId}</strong></p>
+          <p>We'll deliver your items within 2 hours.</p>
+          <button onclick="window.location.reload()" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+            Place Another Order
+          </button>
+        </div>
+      `;
+      successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    
+    // Reset button
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+  })
+  .catch(error => {
+    console.error('Error submitting order:', error);
+    
+    // Show error message
+    displayErrors({
+      form: error.message || 'Failed to submit order. Please try again.'
+    });
+    
+    // Add form error display
+    const errorSummary = document.getElementById('formErrorSummary');
+    if (errorSummary) {
+      const errorList = document.getElementById('errorList');
+      errorList.innerHTML = `<li>${error.message || 'Failed to submit order'}</li>`;
+      errorSummary.style.display = 'block';
+      errorSummary.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    
+    // Reset button
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+  });
 }
+
