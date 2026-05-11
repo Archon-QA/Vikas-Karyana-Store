@@ -106,9 +106,10 @@ function validateForm(formData) {
   if (!formData.phone || !formData.phone.trim()) {
     errors.phone = "Phone number is required";
   } else {
-    const phoneRegex = /^[6-9]\d{9}$/;
-    if (!phoneRegex.test(formData.phone.replace(/\s+/g, ''))) {
-      errors.phone = "Phone must be 10 digits starting with 6-9";
+    const cleaned = formData.phone.replace(/\s+/g, '').replace(/^\+91/, '');
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(cleaned)) {
+      errors.phone = "Phone must be 10 digits";
     }
   }
   
@@ -177,15 +178,17 @@ function submitOrder(e) {
   const form = e.target;
   
   // Get form input elements
-  const inputs = form.querySelectorAll('input');
+  const inputs = form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]');
   const textareas = form.querySelectorAll('textarea');
+  const paymentMethodRadio = form.querySelector('input[name="payment_method"]:checked');
   
   const formData = {
     name: inputs[0].value,
     phone: inputs[1].value,
-    email: inputs[3]?.value || '', // Email if present in form
-    address: inputs[2].value,
-    items: textareas[0].value
+    email: inputs[2]?.value || '', // Email if present
+    address: inputs[3].value,
+    items: textareas[0].value,
+    payment_method: paymentMethodRadio?.value || 'cod'
   };
   
   const { isValid, errors } = validateForm(formData);
@@ -201,17 +204,23 @@ function submitOrder(e) {
   // Calculate order totals
   const { subtotal, deliveryFee, total } = calculateTotals();
   
-  // Prepare order data for API
+  // Build order items array with id and qty (as backend expects)
+  const orderItems = cart.map(item => ({
+    id: item.id,
+    qty: item.qty
+  }));
+  
+  // Prepare order data for API - must match backend field names
   const orderData = {
     customer_name: formData.name,
-    phone: formData.phone,
-    email: formData.email,
+    customer_phone: formData.phone,
+    customer_email: formData.email,
     delivery_address: formData.address,
-    order_items: JSON.stringify(cart), // Send cart items as JSON
+    order_items: orderItems, // Send as array of {id, qty}
     subtotal: subtotal,
     delivery_fee: deliveryFee,
     total: total,
-    payment_method: 'cod' // Cash on delivery for now
+    payment_method: formData.payment_method
   };
   
   // Show loading state
@@ -240,11 +249,10 @@ function submitOrder(e) {
     // Order submitted successfully
     console.log('Order created:', data);
     
-    // Store order details for confirmation page
     const orderId = data.data?.id || data.data?.order_id;
     const orderRef = data.data?.order_ref;
     
-    // Store in sessionStorage to pass to confirmation page
+    // Store order details in session
     sessionStorage.setItem('lastOrder', JSON.stringify({
       id: orderId,
       ref: orderRef,
@@ -256,34 +264,18 @@ function submitOrder(e) {
       subtotal: subtotal,
       deliveryFee: deliveryFee,
       total: total,
+      payment_method: formData.payment_method,
       timestamp: new Date().toLocaleString('en-IN')
     }));
     
-    // Clear form and cart
-    form.reset();
-    cart = [];
-    document.getElementById('cart-bar').style.display = 'none';
-    
-    // Show success message or redirect
-    const successMsg = document.getElementById('success-msg');
-    if (successMsg) {
-      successMsg.style.display = 'block';
-      successMsg.innerHTML = `
-        <div style="text-align: center; padding: 20px;">
-          <h3>✅ Order Placed Successfully!</h3>
-          <p>Your order ID: <strong>#${orderRef || orderId}</strong></p>
-          <p>We'll deliver your items within 2 hours.</p>
-          <button onclick="window.location.reload()" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
-            Place Another Order
-          </button>
-        </div>
-      `;
-      successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    // Process payment based on method selected
+    if (formData.payment_method === 'razorpay') {
+      // Initialize Razorpay payment
+      initiateRazorpayPayment(orderId, orderRef, formData, total, submitBtn, originalBtnText);
+    } else {
+      // COD - Order is complete
+      showOrderSuccess(orderRef, submitBtn, originalBtnText, form);
     }
-    
-    // Reset button
-    submitBtn.disabled = false;
-    submitBtn.textContent = originalBtnText;
   })
   .catch(error => {
     console.error('Error submitting order:', error);
@@ -293,7 +285,6 @@ function submitOrder(e) {
       form: error.message || 'Failed to submit order. Please try again.'
     });
     
-    // Add form error display
     const errorSummary = document.getElementById('formErrorSummary');
     if (errorSummary) {
       const errorList = document.getElementById('errorList');
@@ -302,9 +293,131 @@ function submitOrder(e) {
       errorSummary.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     
-    // Reset button
     submitBtn.disabled = false;
     submitBtn.textContent = originalBtnText;
   });
+}
+
+// Razorpay Payment Handler
+function initiateRazorpayPayment(orderId, orderRef, formData, total, submitBtn, originalBtnText) {
+  // First, create a Razorpay order on backend
+  fetch('http://localhost:3000/api/payments/create', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      order_id: orderId,
+      total_amount: total
+    })
+  })
+  .then(response => {
+    if (!response.ok) {
+      return response.json().then(data => {
+        throw new Error(data.error || 'Failed to create payment');
+      });
+    }
+    return response.json();
+  })
+  .then(paymentData => {
+    const razorpayOrderId = paymentData.data.razorpay_order_id;
+    const razorpayKeyId = paymentData.data.razorpay_key_id;
+    
+    // Initialize Razorpay checkout
+    const options = {
+      key: razorpayKeyId,
+      amount: Math.round(total * 100), // Amount in paise
+      currency: 'INR',
+      name: 'Vikas Karyana Store',
+      description: `Order #${orderRef}`,
+      order_id: razorpayOrderId,
+      prefill: {
+        name: formData.name,
+        email: formData.email,
+        contact: formData.phone
+      },
+      handler: function(response) {
+        // Payment successful - verify signature on backend
+        verifyPaymentSignature({
+          razorpay_payment_id: response.razorpay_payment_id,
+          razorpay_order_id: response.razorpay_order_id,
+          razorpay_signature: response.razorpay_signature,
+          order_id: orderId
+        }, orderRef, submitBtn, originalBtnText);
+      },
+      modal: {
+        ondismiss: function() {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+          displayErrors({ form: 'Payment cancelled' });
+        }
+      }
+    };
+    
+    const rzp = new Razorpay(options);
+    rzp.open();
+  })
+  .catch(error => {
+    console.error('Razorpay error:', error);
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+    displayErrors({ form: error.message || 'Failed to initiate payment' });
+  });
+}
+
+// Verify Payment Signature
+function verifyPaymentSignature(paymentDetails, orderRef, submitBtn, originalBtnText) {
+  fetch('http://localhost:3000/api/payments/verify', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(paymentDetails)
+  })
+  .then(response => {
+    if (!response.ok) {
+      return response.json().then(data => {
+        throw new Error(data.error || 'Payment verification failed');
+      });
+    }
+    return response.json();
+  })
+  .then(data => {
+    showOrderSuccess(orderRef, submitBtn, originalBtnText);
+  })
+  .catch(error => {
+    console.error('Payment verification error:', error);
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
+    displayErrors({ form: 'Payment verification failed. Please contact support.' });
+  });
+}
+
+// Show Order Success Message
+function showOrderSuccess(orderRef, submitBtn, originalBtnText, form) {
+  const successMsg = document.getElementById('success-msg');
+  if (successMsg) {
+    successMsg.style.display = 'block';
+    successMsg.innerHTML = `
+      <div style="text-align: center; padding: 20px;">
+        <h3>✅ Order Placed Successfully!</h3>
+        <p>Your order ID: <strong>#${orderRef}</strong></p>
+        <p>We'll deliver your items within 2 hours.</p>
+        <button onclick="window.location.reload()" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+          Place Another Order
+        </button>
+      </div>
+    `;
+    successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+  
+  // Clear form and cart
+  if (form) form.reset();
+  cart = [];
+  document.getElementById('cart-bar').style.display = 'none';
+  
+  // Reset button
+  submitBtn.disabled = false;
+  submitBtn.textContent = originalBtnText;
 }
 

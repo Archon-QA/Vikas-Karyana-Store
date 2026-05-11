@@ -122,6 +122,17 @@
           <option>Afternoon (12pm – 5pm)</option>
           <option>Evening (5pm – 10pm)</option>
         </select>
+        <label>Payment Method <span style="color: #EF5350;">*</span></label>
+        <div class="payment-options">
+          <label class="radio-label">
+            <input type="radio" name="payment_method" value="cod" checked/>
+            <span>💵 Cash on Delivery (COD)</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="payment_method" value="razorpay"/>
+            <span>💳 Online Payment (Razorpay)</span>
+          </label>
+        </div>
         <button class="submit-btn" type="submit">Submit Order →</button>
         <div class="success-msg" id="success-msg" aria-live="polite" aria-atomic="true">✅ Order received! We'll call you shortly to confirm.</div>
       </form>
@@ -151,5 +162,7 @@
 <div class="foot-bottom">© 2026 Vikas Karyana Store. All rights reserved.</div>
 
 <script src="script.js"></script>
+<!-- Razorpay SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </body>
 </html>

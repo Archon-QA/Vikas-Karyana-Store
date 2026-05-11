@@ -95,7 +95,16 @@ input:focus,select:focus,textarea:focus{border-color:var(--green);}
 textarea{height:90px;resize:none;}
 .submit-btn{width:100%;background:var(--green);color:#fff;padding:13px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
 .submit-btn:hover{background:var(--green-dark);}
+.submit-btn:disabled{background:#ccc;cursor:not-allowed;opacity:.6;}
 .success-msg{display:none;background:var(--green-light);border:1px solid var(--green);color:var(--green-dark);padding:14px 18px;border-radius:10px;font-size:14px;margin-top:12px;text-align:center;}
+
+/* Payment Options */
+.payment-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.radio-label{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1.5px solid #ddd;border-radius:9px;cursor:pointer;transition:all .2s;background:#fff;}
+.radio-label:hover{border-color:var(--green);background:var(--green-light);}
+.radio-label input[type="radio"]{width:18px;height:18px;cursor:pointer;accent-color:var(--green);}
+.radio-label input[type="radio"]:checked+span{color:var(--green);font-weight:500;}
+.radio-label span{font-size:14px;color:var(--text);}
 
 /* Sticky cart bar styling */
 .cart-bar-sticky{display:none !important;position:fixed;bottom:0;left:0;right:0;background:var(--green-dark);color:#fff;padding:12px 4vw;border-top:2px solid var(--green);align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;z-index:99;box-shadow:0 -2px 10px rgba(0,0,0,0.1);}
