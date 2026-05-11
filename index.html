@@ -17,7 +17,7 @@
     <a href="#order">Order</a>
     <a href="#contact">Contact</a>
   </div>
-  <button class="nav-cta" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Order Now</button>
+  <button class="nav-cta" aria-label="Scroll to order form" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Order Now</button>
 </nav>
 
 <!-- HERO -->
@@ -27,8 +27,8 @@
     <h1>Fresh Groceries,<br/><em>Delivered</em> to Your Door</h1>
     <p>From daily staples to your favourite snacks — Vikas Karyana Store has everything your household needs, right here in the neighbourhood.</p>
     <div class="hero-btns">
-      <button class="btn-primary" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Place an Order</button>
-      <button class="btn-secondary" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">Browse Products</button>
+      <button class="btn-primary" aria-label="Place an order now" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Place an Order</button>
+      <button class="btn-secondary" aria-label="Browse all products" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">Browse Products</button>
     </div>
   </div>
   <div class="hero-visual">
@@ -68,19 +68,23 @@
   <div class="section-label">Popular items</div>
   <div class="section-title">Featured Products</div>
   <div class="products">
-    <div class="prod-card"><div class="prod-img">🌾</div><div class="prod-body"><div class="prod-name">Aashirvaad Atta</div><div class="prod-weight">5 kg</div><div class="prod-footer"><div class="prod-price">₹245</div><button class="add-btn" onclick="addToCart('Aashirvaad Atta')">+ Add</button></div></div></div>
-    <div class="prod-card"><div class="prod-img">🛢️</div><div class="prod-body"><div class="prod-name">Fortune Sunflower Oil</div><div class="prod-weight">1 litre</div><div class="prod-footer"><div class="prod-price">₹138</div><button class="add-btn" onclick="addToCart('Fortune Oil')">+ Add</button></div></div></div>
-    <div class="prod-card"><div class="prod-img">🫘</div><div class="prod-body"><div class="prod-name">Toor Dal</div><div class="prod-weight">1 kg</div><div class="prod-footer"><div class="prod-price">₹115</div><button class="add-btn" onclick="addToCart('Toor Dal')">+ Add</button></div></div></div>
-    <div class="prod-card"><div class="prod-img">🍿</div><div class="prod-body"><div class="prod-name">Kurkure Masala Munch</div><div class="prod-weight">90 g</div><div class="prod-footer"><div class="prod-price">₹20</div><button class="add-btn" onclick="addToCart('Kurkure')">+ Add</button></div></div></div>
-    <div class="prod-card"><div class="prod-img">☕</div><div class="prod-body"><div class="prod-name">Tata Tea Gold</div><div class="prod-weight">500 g</div><div class="prod-footer"><div class="prod-price">₹248</div><button class="add-btn" onclick="addToCart('Tata Tea')">+ Add</button></div></div></div>
-    <div class="prod-card"><div class="prod-img">🌶️</div><div class="prod-body"><div class="prod-name">MDH Garam Masala</div><div class="prod-weight">100 g</div><div class="prod-footer"><div class="prod-price">₹65</div><button class="add-btn" onclick="addToCart('MDH Masala')">+ Add</button></div></div></div>
-  </div>
-  <!-- Cart Bar -->
-  <div id="cart-bar" style="display:none;margin-top:24px;background:var(--green-dark);color:#fff;padding:14px 20px;border-radius:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-    <span id="cart-text" style="font-size:14px;">Items selected</span>
-    <button class="btn-primary" style="background:#fff;color:var(--green-dark);" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Proceed to Order ↓</button>
+    <div class="prod-card"><div class="prod-img">🌾</div><div class="prod-body"><div class="prod-name">Aashirvaad Atta</div><div class="prod-weight">5 kg</div><div class="prod-footer"><div class="prod-price">₹245</div><button class="add-btn" aria-label="Add Aashirvaad Atta to cart" onclick="addToCart(1)">+ Add</button></div></div></div>
+    <div class="prod-card"><div class="prod-img">🛢️</div><div class="prod-body"><div class="prod-name">Fortune Sunflower Oil</div><div class="prod-weight">1 litre</div><div class="prod-footer"><div class="prod-price">₹138</div><button class="add-btn" aria-label="Add Fortune Oil to cart" onclick="addToCart(2)">+ Add</button></div></div></div>
+    <div class="prod-card"><div class="prod-img">🫘</div><div class="prod-body"><div class="prod-name">Toor Dal</div><div class="prod-weight">1 kg</div><div class="prod-footer"><div class="prod-price">₹115</div><button class="add-btn" aria-label="Add Toor Dal to cart" onclick="addToCart(3)">+ Add</button></div></div></div>
+    <div class="prod-card"><div class="prod-img">🍿</div><div class="prod-body"><div class="prod-name">Kurkure Masala Munch</div><div class="prod-weight">90 g</div><div class="prod-footer"><div class="prod-price">₹20</div><button class="add-btn" aria-label="Add Kurkure to cart" onclick="addToCart(4)">+ Add</button></div></div></div>
+    <div class="prod-card"><div class="prod-img">☕</div><div class="prod-body"><div class="prod-name">Tata Tea Gold</div><div class="prod-weight">500 g</div><div class="prod-footer"><div class="prod-price">₹248</div><button class="add-btn" aria-label="Add Tata Tea to cart" onclick="addToCart(5)">+ Add</button></div></div></div>
+    <div class="prod-card"><div class="prod-img">🌶️</div><div class="prod-body"><div class="prod-name">MDH Garam Masala</div><div class="prod-weight">100 g</div><div class="prod-footer"><div class="prod-price">₹65</div><button class="add-btn" aria-label="Add MDH Masala to cart" onclick="addToCart(6)">+ Add</button></div></div></div>
   </div>
 </section>
+
+<!-- Sticky Cart Bar -->
+<div id="cart-bar" class="cart-bar-sticky" role="region" aria-label="Shopping cart">
+  <div class="cart-bar-content">
+    <span id="cart-text">Items in cart</span>
+    <span id="cart-price" style="color:#fff;">Total: ₹0</span>
+  </div>
+  <button class="btn-primary" aria-label="Proceed to checkout" style="background:#fff;color:var(--green-dark);" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Proceed to Order ↓</button>
+</div>
 
 <!-- ORDER FORM -->
 <section id="order" class="order-section">
@@ -95,16 +99,22 @@
       <div class="info-row"><div class="info-icon">🕐</div><span>Mon–Sun: 7:00 AM – 10:00 PM</span></div>
     </div>
     <div>
-      <form onsubmit="submitOrder(event)">
+      <div id="formErrorSummary" class="error-summary" style="display:none;" aria-live="assertive" aria-atomic="true">
+        <h4>⚠️ Please fix these errors:</h4>
+        <ul id="errorList"></ul>
+      </div>
+      <form onsubmit="submitOrder(event)" novalidate>
         <h3>Order Form</h3>
         <div class="form-row">
-          <div><label>Your Name</label><input type="text" placeholder="e.g. Rahul Sharma" required/></div>
-          <div><label>Phone Number</label><input type="tel" placeholder="+91 98765 43210" required/></div>
+          <div><label>Your Name <span style="color: #EF5350;">*</span></label><input type="text" aria-required="true" placeholder="e.g. Rahul Sharma" required/><span class="error-text" id="nameError"></span></div>
+          <div><label>Phone Number <span style="color: #EF5350;">*</span></label><input type="tel" aria-required="true" placeholder="+91 98765 43210" required/><span class="error-text" id="phoneError"></span></div>
         </div>
-        <label>Delivery Address</label>
-        <input type="text" placeholder="House no., street, sector…" required/>
-        <label>Items You Need</label>
-        <textarea placeholder="e.g. 2 kg atta, 1L oil, MDH masala, Kurkure…" id="items-field" required></textarea>
+        <label>Email Address (Optional)</label>
+        <input type="email" placeholder="your.email@example.com"/><span class="error-text" id="emailError"></span>
+        <label>Delivery Address <span style="color: #EF5350;">*</span></label>
+        <input type="text" aria-required="true" placeholder="House no., street, sector…" required/><span class="error-text" id="addressError"></span>
+        <label>Items You Need <span style="color: #EF5350;">*</span></label>
+        <textarea placeholder="e.g. 1x Aashirvaad Atta (5kg, ₹245), 2x Fortune Oil (1L, ₹276)" aria-required="true" id="items-field" required></textarea><span class="error-text" id="itemsError"></span>
         <label>Preferred Delivery Time</label>
         <select>
           <option>As soon as possible</option>
@@ -112,8 +122,19 @@
           <option>Afternoon (12pm – 5pm)</option>
           <option>Evening (5pm – 10pm)</option>
         </select>
+        <label>Payment Method <span style="color: #EF5350;">*</span></label>
+        <div class="payment-options">
+          <label class="radio-label">
+            <input type="radio" name="payment_method" value="cod" checked/>
+            <span>💵 Cash on Delivery (COD)</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="payment_method" value="razorpay"/>
+            <span>💳 Online Payment (Razorpay)</span>
+          </label>
+        </div>
         <button class="submit-btn" type="submit">Submit Order →</button>
-        <div class="success-msg" id="success-msg">✅ Order received! We'll call you shortly to confirm.</div>
+        <div class="success-msg" id="success-msg" aria-live="polite" aria-atomic="true">✅ Order received! We'll call you shortly to confirm.</div>
       </form>
     </div>
   </div>
@@ -141,5 +162,7 @@
 <div class="foot-bottom">© 2026 Vikas Karyana Store. All rights reserved.</div>
 
 <script src="script.js"></script>
+<!-- Razorpay SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </body>
 </html>
